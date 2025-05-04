@@ -7,10 +7,10 @@ namespace Storage.DataBase.Services
 {
     public class ProductsBatchesService : IProductsBatchesService
     {
-        private readonly ProductsBatchesDbContext _dbContext;
+        private readonly AppDbContext _dbContext;
         protected DbSet<ProductsBatch> ProductsBatches => _dbContext.Set<ProductsBatch>();
 
-        public ProductsBatchesService(ProductsBatchesDbContext dbContext) {
+        public ProductsBatchesService(AppDbContext dbContext) {
             _dbContext = dbContext;
         }
 

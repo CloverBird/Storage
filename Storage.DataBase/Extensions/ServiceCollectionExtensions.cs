@@ -13,7 +13,7 @@ public static class ServiceCollectionExtensions
     public static IServiceCollection AddDatabase(this IServiceCollection services, IConfiguration configuration) {
         var connectionString = configuration.GetSection("Database:ConnectionString").Value;
 
-        services.AddDbContext<ProductsBatchesDbContext>(options =>
+        services.AddDbContext<AppDbContext>(options =>
             options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString),   
                     options => {
                         options.MigrationsAssembly("Storage.DataBase");

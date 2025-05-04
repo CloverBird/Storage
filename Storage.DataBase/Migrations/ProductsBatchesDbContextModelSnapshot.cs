@@ -10,7 +10,7 @@ using Storage.DataBase.DbContexts;
 
 namespace Storage.DataBase.Migrations
 {
-    [DbContext(typeof(ProductsBatchesDbContext))]
+    [DbContext(typeof(AppDbContext))]
     partial class ProductsBatchesDbContextModelSnapshot : ModelSnapshot
     {
         protected override void BuildModel(ModelBuilder modelBuilder)
@@ -56,6 +56,64 @@ namespace Storage.DataBase.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("ProductsBatches", (string)null);
+                });
+
+            modelBuilder.Entity("Storage.Core.Models.Report", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("char(36)");
+
+                    b.Property<DateTime>("GeneratedAt")
+                        .HasColumnType("datetime(6)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Reports", (string)null);
+                });
+
+            modelBuilder.Entity("Storage.Core.Models.ReportItem", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("char(36)");
+
+                    b.Property<Guid>("ProductsBatchId")
+                        .HasColumnType("char(36)");
+
+                    b.Property<Guid?>("ReportId")
+                        .HasColumnType("char(36)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ProductsBatchId");
+
+                    b.HasIndex("ReportId");
+
+                    b.ToTable("ReportItems", (string)null);
+                });
+
+            modelBuilder.Entity("Storage.Core.Models.ReportItem", b =>
+                {
+                    b.HasOne("Storage.Core.Models.ProductsBatch", "ProductsBatch")
+                        .WithMany()
+                        .HasForeignKey("ProductsBatchId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Storage.Core.Models.Report", "Report")
+                        .WithMany("ReportItems")
+                        .HasForeignKey("ReportId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.Navigation("ProductsBatch");
+
+                    b.Navigation("Report");
+                });
+
+            modelBuilder.Entity("Storage.Core.Models.Report", b =>
+                {
+                    b.Navigation("ReportItems");
                 });
 #pragma warning restore 612, 618
         }

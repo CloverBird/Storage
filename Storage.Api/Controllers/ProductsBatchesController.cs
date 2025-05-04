@@ -54,15 +54,6 @@ namespace Storage.Api.Controllers
             return productsBatch == null ? NotFound() : Ok(productsBatch);
         }
 
-        [HttpGet("state/{state}")]
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        public ActionResult<IEnumerable<ProductsBatch>> GetBatchesByState(State state)
-        {
-            var productsBatches = _productsBatchesService.GetProductsBatches();
-            var productsBatchesByState = productsBatches.Where(p => p.State == state);
-            return Ok(productsBatchesByState);
-        }
-
         [HttpPut("{id:guid}")]
         [Produces("application/json")]
         [ProducesResponseType(StatusCodes.Status200OK)]
@@ -77,6 +68,28 @@ namespace Storage.Api.Controllers
             var productsBatch = _productsBatchesService.UpdateProductsBatch(id, updatedProductsBatch);
 
             return productsBatch == null ? NotFound() : Ok(productsBatch);
+        }
+
+        [HttpPatch("{id:guid}/reduce")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public ActionResult<ProductsBatch> ReduceQuantity(Guid id, [FromBody] int amount)
+        {
+            if (amount <= 0)
+                return BadRequest("Amount must be greater than 0.");
+
+            var productsBatch = _productsBatchesService.GetProductsBatch(id);
+            if (productsBatch == null)
+                return NotFound();
+
+            if (productsBatch.Quantity < amount)
+                return BadRequest("Not enough quantity in stock.");
+
+            productsBatch.Quantity -= amount;
+            _productsBatchesService.UpdateProductsBatch(id, productsBatch);
+
+            return Ok(productsBatch);
         }
 
         [HttpDelete("{id:guid}")]

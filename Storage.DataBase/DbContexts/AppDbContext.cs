@@ -3,9 +3,9 @@ using Storage.DataBase.EntityTypeConfigurations;
 
 namespace Storage.DataBase.DbContexts
 {
-    public class ProductsBatchesDbContext : DbContext
+    public class AppDbContext : DbContext
     {
-        public ProductsBatchesDbContext(DbContextOptions<ProductsBatchesDbContext> options) 
+        public AppDbContext(DbContextOptions<AppDbContext> options) 
             : base(options) { }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -13,6 +13,8 @@ namespace Storage.DataBase.DbContexts
             base.OnModelCreating(modelBuilder);
 
             modelBuilder.ApplyConfiguration(new ProductsBatchConfiguration());
+            modelBuilder.ApplyConfiguration(new ReportConfiguration());
+            modelBuilder.ApplyConfiguration(new ReportItemConfiguration());
         }
     }
 }
