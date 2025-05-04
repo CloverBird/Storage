@@ -11,7 +11,7 @@ namespace Storage.Api.Controllers
     {
         private readonly IReportsService _reportsService;
 
-        public ReportsController(IReportsService reportsService, IProductsBatchesService productsBatchesService) {
+        public ReportsController(IReportsService reportsService) {
             _reportsService = reportsService;
         }
 
