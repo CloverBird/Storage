@@ -6,8 +6,8 @@ namespace Storage.Core.Models
         public required string ProductName { get; set; }
         public string? ProductDescription { get; set; } 
         public required double ProductPrice { get; set; }
-        public required DateOnly ExpirationDate { get; set; }
         public required DateOnly ProducingDate { get; set; }
+        public required DateOnly ExpirationDate { get; set; }
         public int? Discount { get; set; }
         public required int Quantity { get; set; }
                 
