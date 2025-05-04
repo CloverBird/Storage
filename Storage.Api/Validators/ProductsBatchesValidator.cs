@@ -1,5 +1,5 @@
 using FluentValidation;
-using Storage.Api.Models;
+using Storage.Core.Models;
 
 namespace Storage.Api.Validators
 {

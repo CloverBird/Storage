@@ -6,7 +6,7 @@ using Storage.Core.Services;
 using Storage.DataBase.DbContexts;
 using Storage.DataBase.Services;
 
-namespace ClothingShop.Goods.Database.Extensions;
+namespace Storage.Database.Extensions;
 
 public static class ServiceCollectionExtensions
 {
