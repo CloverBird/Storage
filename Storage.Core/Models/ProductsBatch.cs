@@ -8,7 +8,9 @@ namespace Storage.Core.Models
         public required double ProductPrice { get; set; }
         public required DateOnly ExpirationDate { get; set; }
         public required DateOnly ProducingDate { get; set; }
-        public double? Discount { get; set; }
+        public int? Discount { get; set; }
+        public required int Quantity { get; set; }
+                
         public State State { 
             get {
                 var today = DateOnly.FromDateTime(DateTime.Today);
@@ -24,6 +26,34 @@ namespace Storage.Core.Models
             } 
         }
 
-        public int Quantity { get; set; }
+        public double PriceWithDiscount {
+            get {
+                return Discount == null ?
+                    ProductPrice : 
+                    ProductPrice - ProductPrice * ((double)Discount / 100);
+            }
+        }
+
+        public ProductsBatch Clone() => new ProductsBatch {
+            Id = Id,
+            ProductName = ProductName,
+            ProductDescription = ProductDescription,
+            ProductPrice = ProductPrice,
+            Discount = Discount,
+            ProducingDate = ProducingDate,
+            ExpirationDate = ExpirationDate,
+            Quantity = Quantity
+        };
+
+        public ProductsBatch CloneWithNewId() => new ProductsBatch {
+            Id = Guid.NewGuid(),
+            ProductName = ProductName,
+            ProductDescription = ProductDescription,
+            ProductPrice = ProductPrice,
+            Discount = Discount,
+            ProducingDate = ProducingDate,
+            ExpirationDate = ExpirationDate,
+            Quantity = Quantity
+        };
     }
 }

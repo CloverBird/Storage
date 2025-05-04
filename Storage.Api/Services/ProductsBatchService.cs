@@ -9,16 +9,7 @@ namespace Storage.Api.Services
 
         public ProductsBatch CreateProductsBatch(ProductsBatch productBatch)
         {
-            var newProductBatch = new ProductsBatch {
-                Id = Guid.NewGuid(),
-                ProductName = productBatch.ProductName,
-                ProductDescription = productBatch.ProductDescription,
-                ProducingDate = productBatch.ProducingDate,
-                ExpirationDate = productBatch.ExpirationDate,
-                Discount = productBatch.Discount,
-                ProductPrice = productBatch.ProductPrice,
-                Quantity = productBatch.Quantity
-            };
+            var newProductBatch = productBatch.CloneWithNewId();
 
             _productsBatches.Add(newProductBatch);
 
@@ -28,11 +19,7 @@ namespace Storage.Api.Services
         public bool DeleteProductsBatch(Guid id)
         {
             var productsBatch = _productsBatches.FirstOrDefault(p => p.Id == id);
-            if (productsBatch == null)
-                return false;
-
-            _productsBatches.Remove(productsBatch);
-            return true;
+            return productsBatch != null && _productsBatches.Remove(productsBatch);
         }
 
         public ProductsBatch? GetProductsBatch(Guid id) => _productsBatches.FirstOrDefault(p => p.Id == id);

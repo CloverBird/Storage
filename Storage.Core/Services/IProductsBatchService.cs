@@ -12,7 +12,7 @@ namespace Storage.Core.Services
 
         ProductsBatch CreateProductsBatch(ProductsBatch productsBatch);
 
-        ProductsBatch? UpdateProductsBatch(Guid productsBatchId, ProductsBatch updatedProductsbatch);
+        ProductsBatch? UpdateProductsBatch(Guid productsBatchId, ProductsBatch updatedProductsBatch);
 
         bool DeleteProductsBatch(Guid id);
 
