@@ -1,8 +1,6 @@
 using FluentValidation;
 using Storage.Core.Models;
-using Storage.Core.Services;
 using Storage.Database.Extensions;
-using Storage.Api.Services;
 using Storage.Api.Validators;
 using Storage.Api.HostedServices;
 
@@ -12,7 +10,7 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-//builder.Services.AddSingleton<IProductsBatchesService, ProductsBatchesService>();
+//builder.Services.AddSingleton<IProductsBatchesService, ProductsBatchesService>(); // for launch without database
 builder.Services.AddDatabase(builder.Configuration);
 builder.Services.AddScoped<IValidator<ProductsBatch>, ProductsBatchesValidator>();
 
