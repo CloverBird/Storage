@@ -1,7 +1,7 @@
 using FluentValidation;
 using Microsoft.AspNetCore.Mvc;
-using Storage.Api.Models;
-using Storage.Api.Services;
+using Storage.Core.Models;
+using Storage.Core.Services;
 
 namespace Storage.Api.Controllers
 {

@@ -1,4 +1,4 @@
-namespace Storage.Api.Models
+namespace Storage.Core.Models
 {
     public class ProductsBatch
     {

@@ -1,6 +1,6 @@
-using Storage.Api.Models;
+using Storage.Core.Models;
 
-namespace Storage.Api.Services
+namespace Storage.Core.Services
 {
     public interface IProductsBatchesService
     {

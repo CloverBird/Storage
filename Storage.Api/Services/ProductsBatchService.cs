@@ -1,4 +1,5 @@
-using Storage.Api.Models;
+using Storage.Core.Models;
+using Storage.Core.Services;
 
 namespace Storage.Api.Services
 {
