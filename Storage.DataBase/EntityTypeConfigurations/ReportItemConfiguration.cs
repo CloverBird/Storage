@@ -14,7 +14,8 @@ namespace Storage.DataBase.EntityTypeConfigurations
                 .WithMany(r => r.ReportItems);
 
             builder.HasOne(ri => ri.ProductsBatch)
-                .WithMany();
+                .WithMany()
+                .HasForeignKey(ri => ri.ProductsBatchId);
 
             builder.ToTable("ReportItems");
         }

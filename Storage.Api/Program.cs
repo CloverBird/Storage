@@ -4,6 +4,7 @@ using Storage.Core.Services;
 using Storage.Database.Extensions;
 using Storage.Api.Services;
 using Storage.Api.Validators;
+using Storage.Api.HostedServices;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -14,6 +15,8 @@ builder.Services.AddSwaggerGen();
 //builder.Services.AddSingleton<IProductsBatchesService, ProductsBatchesService>();
 builder.Services.AddDatabase(builder.Configuration);
 builder.Services.AddScoped<IValidator<ProductsBatch>, ProductsBatchesValidator>();
+
+builder.Services.AddHostedService<DailyReportBackgroundService>();
 
 var app = builder.Build();
 

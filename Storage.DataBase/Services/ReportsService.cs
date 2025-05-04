@@ -24,7 +24,7 @@ namespace Storage.DataBase.Services
 
             report.ReportItems = productsBatches.Select(p => new ReportItem {
                     Id = Guid.NewGuid(),
-                    ProductsBatch = p,
+                    ProductsBatchId = p.Id,
                     Report = report
                 }).ToList();
 

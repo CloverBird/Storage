@@ -11,7 +11,7 @@ using Storage.DataBase.DbContexts;
 namespace Storage.DataBase.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class ProductsBatchesDbContextModelSnapshot : ModelSnapshot
+    partial class AppDbContextModelSnapshot : ModelSnapshot
     {
         protected override void BuildModel(ModelBuilder modelBuilder)
         {
