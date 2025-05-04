@@ -53,6 +53,15 @@ namespace Storage.Api.Controllers
 
             return productsBatch == null ? NotFound() : Ok(productsBatch);
         }
+        
+        [HttpGet("state/{state}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public ActionResult<IEnumerable<ProductsBatch>> GetBatchesByState(State state)
+        {
+            var productsBatches = _productsBatchesService.GetProductsBatches();
+            var productsBatchesByState = productsBatches.Where(p => p.State == state);
+            return Ok(productsBatchesByState);
+        }
 
         [HttpPut("{id:guid}")]
         [Produces("application/json")]

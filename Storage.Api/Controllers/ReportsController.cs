@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Storage.Core.Models;
 using Storage.Core.Services;
+using Storage.DataBase.Services;
 
 namespace Storage.Api.Controllers
 {
@@ -8,35 +9,36 @@ namespace Storage.Api.Controllers
     [Route("api/[controller]")]
     public class ReportsController : ControllerBase
     {
-        private readonly IProductsBatchesService _productsBatchesService;
+        private readonly IReportsService _reportsService;
 
-        public ReportsController(IProductsBatchesService productsBatchesService) {
-            _productsBatchesService = productsBatchesService;
+        public ReportsController(IReportsService reportsService, IProductsBatchesService productsBatchesService) {
+            _reportsService = reportsService;
         }
 
-        [HttpGet("state/{state}")]
+        [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        public ActionResult<IEnumerable<ProductsBatch>> GetBatchesByState(State state)
+        public ActionResult<IEnumerable<Report>> GetAllReports()
         {
-            var productsBatches = _productsBatchesService.GetProductsBatches();
-            var productsBatchesByState = productsBatches.Where(p => p.State == state);
-            return Ok(productsBatchesByState);
+            var reports = _reportsService.GetReports();
+            return Ok(reports);
         }
 
-        // [HttpGet("stats")]
-        // [ProducesResponseType(StatusCodes.Status200OK)]
-        // public ActionResult<Report> GetStats()
-        // {
-        //     var batches = _productsBatchesService.GetProductsBatches();
+        [HttpGet("{id:guid}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public ActionResult<Report> GetReport(Guid id)
+        {
+            var report = _reportsService.GetReport(id);
+            return report == null ? NotFound() : Ok(report);
+        }
 
-        //     var stats = new Report
-        //     {
-        //         Fresh = batches.Count(p => p.State == State.Fresh),
-        //         SoonSpoiled = batches.Count(p => p.State == State.SoonSpoiled),
-        //         Spoiled = batches.Count(p => p.State == State.Spoiled)
-        //     };
-
-        //     return Ok(stats);
-        // }
+        [HttpGet("last")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public ActionResult<Report> GetLastReport()
+        {
+            var report = _reportsService.GetLastReport();
+            return report == null ? NotFound() : Ok(report);
+        }
     }
 }

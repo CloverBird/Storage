@@ -28,7 +28,7 @@ namespace Storage.DataBase.Services
                     Report = report
                 }).ToList();
 
-            _dbContext.Add(report);
+            Reports.Add(report);
             _dbContext.SaveChanges();
 
             return report;
@@ -36,17 +36,18 @@ namespace Storage.DataBase.Services
 
         public Report? GetLastReport()
         {
-            throw new NotImplementedException();
+            return Reports
+                .Include(r => r.ReportItems)
+                    .ThenInclude(ri => ri.ProductsBatch)
+                .OrderByDescending(r => r.GeneratedAt)
+                .FirstOrDefault();
         }
 
-        public Report? GetReport(Guid id)
-        {
-            throw new NotImplementedException();
-        }
+        public Report? GetReport(Guid id) => Reports.AsNoTracking().FirstOrDefault(r => r.Id == id);
 
         public IEnumerable<Report> GetReports()
         {
-            throw new NotImplementedException();
+            return Reports.AsNoTracking();
         }
     }
 }
